@@ -39,3 +39,5 @@
 
 # Bower dependencies
 /web/vendor
+
+!bin/install

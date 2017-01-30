@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Dependencies installation
+composer install --no-progress --no-interaction
+
+bower install
+php bin/console assets:install
+
+rm -rf var/cache/{dev,prod,test}
+rm -rf var/logs/{dev,prod,test}.log
+
+php bin/console doctrine:schema:update --force

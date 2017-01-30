@@ -1,0 +1,5 @@
+services:
+    app.finder.github:
+        class: AppBundle\Service\Finder\GithubFinder
+        arguments:
+            - "@csa_guzzle.client.github_api"

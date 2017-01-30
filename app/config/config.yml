@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: services.yml }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -60,3 +61,12 @@ swiftmailer:
     username:  "%mailer_user%"
     password:  "%mailer_password%"
     spool:     { type: memory }
+
+csa_guzzle:
+    clients:
+        github_api:
+            config:
+                base_uri: https://api.github.com
+                timeout: 2.0
+                headers:
+                    Accept: application/vnd.github.v3+json

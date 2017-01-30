@@ -20,6 +20,7 @@ class LoginType extends AbstractType
                 'attr' => array(
                     'class' => 'btn btn-block btn-success',
                 ),
-            ));
+            ))
+        ;
     }
 }

@@ -1,0 +1,20 @@
+{% extends "AppBundle::base.html.twig" %}
+
+{% block title %}Index{% endblock title %}
+
+{% block body %}
+    <h2>Bienvenue !</h2>
+
+    <p>Cette page vous permet de chercher des repository git par utilisateur, et de laisser des commentaires dessus.</p>
+
+    {{ form(form) }}
+
+    {% if users is not empty %}
+        <p>Voici la liste des utilisateurs correspondant à votre recherche :</p>
+        <ul>
+        {% for user in users %}
+            <li>{{ user.login }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock body %}

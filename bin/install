@@ -9,4 +9,5 @@ php bin/console assets:install
 rm -rf var/cache/{dev,prod,test}
 rm -rf var/logs/{dev,prod,test}.log
 
+php bin/console doctrine:database:create --if-not-exists
 php bin/console doctrine:schema:update --force

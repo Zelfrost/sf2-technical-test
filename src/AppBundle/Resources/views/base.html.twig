@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock title %} - Github Comments</title>
+    <link rel="stylesheet" type="text/css" href="{{ asset('vendor/bootstrap/dist/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/base.css') }}">
+</head>
+<body>
+    {% if app.user %}
+        <aside>
+            <a href="{{ path('logout') }}" class="btn btn-primary">Se déconnecter</a>
+        </aside>
+    {% endif %}
+
+    {% for flash in app.session.flashbag.get('success') %}
+        <p class="bg-success">{{ flash }}</p>
+    {% endfor %}
+
+    {% block body %}{% endblock body %}
+</body>
+</html>

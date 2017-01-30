@@ -1,0 +1,12 @@
+body {
+    width: 80%;
+    margin: 0 auto;
+}
+
+aside {
+    float: right;
+}
+
+.bg-success, .bg-info, .bg-danger {
+    padding: 15px;
+}

@@ -4,11 +4,12 @@
 !app/cache/.gitkeep
 !app/logs/.gitkeep
 
-# Cache and logs (Symfony3)
-/var/cache/*
-/var/logs/*
+# Cache, logs and session (Symfony3)
+/var/*
+!var/bootstrap.php.cache
 !var/cache/.gitkeep
 !var/logs/.gitkeep
+!var/sessions/.gitkeep
 
 # Parameters
 /app/config/parameters.yml
@@ -35,3 +36,6 @@
 
 # Composer PHAR
 /composer.phar
+
+# Bower dependencies
+/web/vendor

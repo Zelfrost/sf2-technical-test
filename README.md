@@ -1,3 +1,16 @@
+# Commentaires
+
+Temps : 5h30/6h
+
+- L'application est livrée avec quelques tests unitaires et fonctionnels. Je fais tourner le tout avec Travis à chaque commit, et je lance code-sniffer pour vérifier la qualité du code.
+- Quelques soucis sur les thèmes que je ne pratique pas trop aujourd'hui avec Symfony :
+  + Twig
+  + Authentification
+- Je n'ai finalement pas mit de Js dessus, je n'avais plus le temps de m'intéresser à React.
+- Bonus :
+  + La liste des dépots récupérée sur Git
+  + Redirection automatique si le nom d'utilisateur recherché ne retourne qu'un résultat
+
 # StadLine Technical Test
 
 ### Tache

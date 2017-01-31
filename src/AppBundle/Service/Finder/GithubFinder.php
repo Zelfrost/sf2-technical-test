@@ -2,15 +2,28 @@
 
 namespace AppBundle\Service\Finder;
 
+use GuzzleHttp\Client;
+
 class GithubFinder
 {
+    /**
+     * @var Client
+     */
     private $client;
 
-    public function __construct($client)
+    /**
+     * @param Client $client
+     */
+    public function __construct(Client $client)
     {
         $this->client = $client;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return array
+     */
     public function findUsers($username)
     {
         $response = $this->client->get(sprintf('search/users?q=%s+in:login', $username));
@@ -24,6 +37,12 @@ class GithubFinder
         return $users;
     }
 
+    /**
+     * @param string      $username
+     * @param string|null $repositoryName
+     *
+     * @return array
+     */
     public function findRepositories($username, $repositoryName = null)
     {
         $url = sprintf(

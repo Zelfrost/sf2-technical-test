@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\User;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,6 +35,14 @@ class Comment
      * @Assert\Length(max="4096")
      */
     private $comment;
+
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User")
+     * @ORM\JoinColumn(nullable=false, referencedColumnName="id")
+     */
+    private $author;
 
     /**
      * @return int
@@ -101,5 +110,25 @@ class Comment
     public function getComment()
     {
         return $this->comment;
+    }
+
+    /**
+     * @param User $author
+     *
+     * @return Comment
+     */
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    /**
+     * @return User
+     */
+    public function getAuthor()
+    {
+        return $this->author;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use AppBundle\Entity\Comment;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -33,6 +34,18 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=64)
      */
     private $password;
+
+    /**
+     * @var Comment[]
+     *
+     * @ORM\OneToMany(
+     *      targetEntity="Comment",
+     *      mappedBy="author",
+     *      cascade={"persist", "remove"},
+     *      orphanRemoval=true
+     * )
+     */
+    private $comments;
 
     /**
      * @return int
@@ -90,6 +103,26 @@ class User implements UserInterface
     public function setPassword($password)
     {
         $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getComments()
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param array $comments
+     *
+     * @return User
+     */
+    public function setComments(array $comments)
+    {
+        $this->comments = $comments;
 
         return $this;
     }

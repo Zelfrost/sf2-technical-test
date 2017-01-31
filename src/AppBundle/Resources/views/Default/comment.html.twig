@@ -5,29 +5,25 @@
 {% block body %}
     <h1>Laisser un commentaire à {{ username }}</h1>
 
-    {% if error_message is defined %}
-        <p class="bg-danger">{{ error_message }}</p>
-    {% else %}
-        {% if success_message is defined and success_message is not null %}
-            <p class="bg-success">{{ success_message }}</p>
-        {% endif %}
+    {% if success_message is defined %}
+        <p class="bg-success">{{ success_message }}</p>
+    {% endif %}
 
-        {{ form(form) }}
+    {{ form(form) }}
 
-        {% if comments is not empty %}
-            <hr>
+    {% if comments is not empty %}
+        <hr>
 
-            <h1>Les commentaires des dépôts de Zelfrost</h1>
+        <h1>Les commentaires des dépôts de Zelfrost</h1>
 
-            <div id="comments">
-            {% for comment in comments %}
-                <div class="comment">
-                    <p><u>{{ comment.repository }}</u></p>
-                    <p>{{ comment.comment }}</p>
-                </div>
-            {% endfor %}
+        <div id="comments">
+        {% for comment in comments %}
+            <div class="comment">
+                <p>Sur <u>{{ comment.repository }}</u>, par {{ comment.author.username }}</p>
+                <p>{{ comment.comment }}</p>
             </div>
-        {% endif %}
+        {% endfor %}
+        </div>
     {% endif %}
 
     <a href="{{ path('index') }}" class="btn btn-block btn-info">Retour</a>

@@ -7,9 +7,13 @@
 
     <p>Cette page vous permet de chercher des repository git par utilisateur, et de laisser des commentaires dessus.</p>
 
+    {% for flash in app.session.flashbag.get('error') %}
+        <p class="bg-danger">{{ flash }}</p>
+    {% endfor %}
+
     {{ form(form) }}
 
-    {% if users is not empty %}
+    {% if users is defined %}
         <hr>
 
         <h1>Liste des correspondances :</h1>

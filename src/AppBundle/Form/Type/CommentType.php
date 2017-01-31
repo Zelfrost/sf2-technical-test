@@ -16,7 +16,7 @@ class CommentType extends AbstractType
         $builder
             ->add('repository', ChoiceType::class, [
                 'choices' => $options['repositories'],
-                'label' => 'Dépôts',
+                'label' => 'Dépôt',
             ])
             ->add('comment', TextareaType::class, [
                 'label' => 'Commentaire',

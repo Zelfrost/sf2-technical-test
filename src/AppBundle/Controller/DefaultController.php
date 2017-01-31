@@ -23,22 +23,30 @@ class DefaultController extends Controller
         $form = $this->createForm(SearchUserType::class);
         $form->handleRequest($request);
 
-        $users = [];
+        if (!$form->isValid()) {
+            return [
+                'form' => $form->createView(),
+            ];
+        }
 
-        if ($form->isValid()) {
-            $data = $form->getData();
+        $data = $form->getData();
 
-            $finder = $this->get('app.finder.github');
+        $finder = $this->get('app.finder.github');
 
-            try {
-                $users = $finder->findUsers($data['username']);
+        try {
+            $users = $finder->findUsers($data['username']);
+        } catch (RequestException $e) {
+            $form->get('username')->addError(new FormError('Github ne répond pas'));
 
-                if (empty($users)) {
-                    $form->get('username')->addError(new FormError('Aucun utilisateur ne correspond à ce login'));
-                }
-            } catch (RequestException $e) {
-                $form->get('username')->addError(new FormError('Github ne répond pas'));
-            }
+            return ['form' => $form->createView()];
+        }
+
+        if (empty($users)) {
+            $form->get('username')->addError(new FormError('Aucun utilisateur ne correspond à ce login'));
+        }
+
+        if (count($users) === 1) {
+            return $this->redirect($this->generateUrl('comment', ['username' => $users[0]]));
         }
 
         return [
@@ -55,42 +63,52 @@ class DefaultController extends Controller
     {
         $finder = $this->get('app.finder.github');
         $manager = $this->getDoctrine()->getManager();
-        $successMessage = null;
 
         try {
             $repositories = $finder->findRepositories($username);
         } catch (RequestException $e) {
-            return [
-                'username' => $username,
-                'error_message' => 'Cet utilisateur n\'existe pas ou n\'a pas de repository',
-            ];
+            $this->get('session')->getFlashBag()->add(
+                'error',
+                'L\'utilisateur que vous avez demandé n\'existe pas, ou n\'a pas de dépôts'
+            );
+
+            return $this->redirect($this->generateUrl('index'));
         }
 
         $comment = new Comment();
         $comment->setUsername($username);
+        $comment->setAuthor($this->getUser());
 
         $form = $this->createForm(CommentType::class, $comment, ['repositories' => $repositories]);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $comment->getRepository() === null) {
-            $form->get('repository')->addError(new FormError('Veuillez choisir un des dépôts de la liste'));
-        }
+        $comments = $manager->getRepository(Comment::class)->findBy(
+            ['username' => $username],
+            ['id' => 'desc']
+        );
 
         if ($form->isValid()) {
             $manager->persist($comment);
             $manager->flush();
 
-            $successMessage = 'Votre commentaire a bien été ajouté';
+            array_unshift($comments, $comment);
+
+            return [
+                'username' => $username,
+                'form' => $form->createView(),
+                'comments' => $comments,
+                'success_message' => 'Votre commentaire a bien été ajouté',
+            ];
         }
 
-        $comments = $manager->getRepository(Comment::class)
-            ->findByUsername($username);
+        if ($form->isSubmitted() && $comment->getRepository() === null) {
+            $form->get('repository')->addError(new FormError('Veuillez choisir un des dépôts de la liste'));
+        }
 
         return [
             'username' => $username,
             'form' => $form->createView(),
             'comments' => $comments,
-            'success_message' => $successMessage,
         ];
     }
 }

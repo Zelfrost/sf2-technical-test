@@ -8,4 +8,6 @@ php:
 install:
   - ./bin/install
 
-script: bin/phpunit
+script:
+    - bin/phpunit
+    - bin/php-cs-fixer fix -v --diff --dry-run --config=sf23 .

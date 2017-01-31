@@ -1,3 +1,19 @@
+# Lancement
+
+- Lancer le script d'installation :
+
+```bin/bash
+bin/install
+```
+
+- Lancer un serveur PHP :
+
+```bin/bash
+bin/console server:run
+```
+
+- Accéder à l'application : **http://localhost:8000/**
+
 # Commentaires
 
 Temps : 5h30/6h
@@ -10,6 +26,9 @@ Temps : 5h30/6h
 - Bonus :
   + La liste des dépots récupérée sur Git
   + Redirection automatique si le nom d'utilisateur recherché ne retourne qu'un résultat
+- Idées non réalisées :
+  + Du javascript pour n'afficher que les commentaires liés à un dépôt (celui sélectionné)
+  + Afficher sur l'accueil les dépôts les plus commentés
 
 # StadLine Technical Test
 

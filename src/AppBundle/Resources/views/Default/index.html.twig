@@ -3,17 +3,19 @@
 {% block title %}Index{% endblock title %}
 
 {% block body %}
-    <h2>Bienvenue !</h2>
+    <h1>Bienvenue !</h1>
 
     <p>Cette page vous permet de chercher des repository git par utilisateur, et de laisser des commentaires dessus.</p>
 
     {{ form(form) }}
 
     {% if users is not empty %}
-        <p>Voici la liste des utilisateurs correspondant à votre recherche :</p>
+        <hr>
+
+        <h1>Liste des correspondances :</h1>
         <ul>
         {% for user in users %}
-            <li>{{ user.login }}</li>
+            <li><a href="{{ path('comment', {'username':user}) }}">{{ user }}</a></li>
         {% endfor %}
         </ul>
     {% endif %}

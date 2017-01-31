@@ -3,13 +3,12 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity()
  */
-class User implements UserInterface
+class Comment
 {
     /**
      * @ORM\Id
@@ -19,20 +18,22 @@ class User implements UserInterface
     protected $id;
 
     /**
-     * @ORM\Column(type="string", length=64, unique=true)
+     * @ORM\Column(type="string", length=64)
      * @Assert\Length(max="64")
      */
     private $username;
 
     /**
-     * @Assert\Length(max="4096")
+     * @ORM\Column(type="string", length=64)
+     * @Assert\Length(max="64")
      */
-    private $plainPassword;
+    private $repository;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=4096)
+     * @Assert\Length(max="4096")
      */
-    private $password;
+    private $comment;
 
     /**
      * @return int
@@ -63,13 +64,13 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $plainPassword
+     * @param string $repository
      *
      * @return User
      */
-    public function setPlainPassword($plainPassword)
+    public function setRepository($repository)
     {
-        $this->plainPassword = $plainPassword;
+        $this->repository = $repository;
 
         return $this;
     }
@@ -77,19 +78,19 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPlainPassword()
+    public function getRepository()
     {
-        return $this->plainPassword;
+        return $this->repository;
     }
 
     /**
-     * @param string $password
+     * @param string $comment
      *
      * @return User
      */
-    public function setPassword($password)
+    public function setComment($comment)
     {
-        $this->password = $password;
+        $this->comment = $comment;
 
         return $this;
     }
@@ -97,22 +98,8 @@ class User implements UserInterface
     /**
      * @return string
      */
-    public function getPassword()
+    public function getComment()
     {
-        return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return ['ROLE_USER'];
-    }
-
-    public function getSalt()
-    {
-        return null;
-    }
-
-    public function eraseCredentials()
-    {
+        return $this->comment;
     }
 }
